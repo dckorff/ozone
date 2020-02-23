@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: './src/demo/ui/Index.tsx',
+  mode: 'development',
   module: {
     rules: [
       {

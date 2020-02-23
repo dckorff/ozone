@@ -3,7 +3,7 @@ import React from 'react';
 // import { AppManager } from '../lib/AppManager';
 import { AppContext } from '../lib/Types';
 import { ContextConnector } from '../../Ozone/ContextWrapper';
-import { TodoComponent } from './TodoComponent';
+import TodoList from './TodoList';
 import { Todo } from '../lib/State';
 
 interface IProps {
@@ -14,14 +14,6 @@ interface IProps {
 
 export class App extends React.Component<IProps, {}> {
 
-
-    private doThings = (): JSX.Element => {
-        // console.log(this.context);
-        // console.log(this.context.value.appManager.getName());
-        // this.context.value.appManager.setName('asdf');
-        return <div>hello-doThings</div>;
-    }
-
     private onTextChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event);
         this.props.onNameChanged(event.target.value);
@@ -30,22 +22,14 @@ export class App extends React.Component<IProps, {}> {
     public render() {
         console.log('App render');
         return (
-            <div>
-                {
-                    this.doThings()
-                }
+            <div className="container m-5">
                 <input
                     type='text'
                     onChange={this.onTextChanged}
                     value={this.props.name}
                 ></input>
-                {
-                    this.props.todos.map( todo => {
-                        // <TodoComponent
-                        //     onDoneChanged={ (value: boolean) => this.props.onDoneChanged(todo.id, value) }
-                        // ></TodoComponent>
-                    })
-                }
+                <hr />
+                <TodoList />
             </div>
         );
     }
@@ -55,13 +39,13 @@ export class App extends React.Component<IProps, {}> {
 export default ContextConnector<AppContext>(App,
     // (contextObject: {appManager: AppManager} ): Partial<IProps> => {
     ( contextObject ): Partial<IProps> => {
-        console.log('ContextConnector-mapper');
-        console.log(contextObject);
-        console.log('contextObject.appManager.getName()');
-        console.log(contextObject.appManager.getName());
+        console.log('ContextConnector-mapper-APP');
+        // console.log(contextObject);
+        // console.log('contextObject.appManager.getName()');
+        // console.log(contextObject.appManager.getName());
         return {
             name: contextObject.appManager.getName(),
-            todos: contextObject.appManager.todoManager.getTodos(),
+            // todos: contextObject.appManager.todoManager.getTodos(),
             // onDoneChanged: contextObject.appManager.todoManager.setDone,
             onNameChanged: contextObject.appManager.setName,
             // asdf: contextObject.appManager.getName(),

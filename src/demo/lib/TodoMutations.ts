@@ -8,7 +8,7 @@ export class TodoMutations {
 
     public static addTodoByValues(state: Readonly<State>, title: string, done: boolean): State {
         const todo: Todo = {
-            id: state.todos.reduce( 
+            id: state.todos.reduce(
                     (accumulatorTodo: Todo, currentTodo: Todo) => {
                         return currentTodo.id > accumulatorTodo.id
                             ?  currentTodo
@@ -21,8 +21,11 @@ export class TodoMutations {
         return {...state, todos: [...state.todos, todo]};
     }
 
-    public static removeTodo(state: Readonly<State>, todoToDelete: Todo): State {
-        return {...state, todos: state.todos.filter( thisTodo => thisTodo.id != todoToDelete.id )};
+    public static removeTodo(state: Readonly<State>, todoIdToDelete: number): State {
+        return {
+            ...state,
+            todos: state.todos.filter( thisTodo => thisTodo.id != todoIdToDelete )
+        };
     }
 
     public static setTodoDone(state: Readonly<State>, todoId: number, done: boolean) {

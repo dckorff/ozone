@@ -7,22 +7,25 @@ interface IProps<TState, TContext> {
     onChange: ( onChange: StateChangedAction<TState> ) => () => void;
 }
 
-interface IState { }
-
 type ContextType = {value: any};
+
+interface IState<TContext> {
+    value: TContext;
+    // contextObject: TContext;
+}
+
 
 const OzoneContext = React.createContext<ContextType>({value: {}});;
 
-export class ContextWrapper<TState, TContext> extends React.Component<IProps<TState, TContext>, IState> {
-
-    // public static OzoneContext = React.createContext<ContextType>({value: {}});;
+export class ContextWrapper<TState, TContext> extends React.Component<IProps<TState, TContext>, IState<TContext>> {
 
     private unsubscribe: UnsubscribeAction;
-    private contextValue: {value: TContext};
 
     constructor(props: any) {
         super(props);
-        this.contextValue = { value: this.props.contextObject };
+        this.state = {
+            value: this.props.contextObject
+        };
     }
 
     public componentDidMount = () => {
@@ -32,7 +35,8 @@ export class ContextWrapper<TState, TContext> extends React.Component<IProps<TSt
             (state, previousState) => {
                 console.log('wrapper-onChange', state, previousState);
                 // Creating an new object here is what triggers the React context to rerender connected components
-                this.contextValue = {value: this.props.contextObject};
+                // this.contextValue = {value: this.props.contextObject};
+                this.setState({value: this.state.value})
             }
         );
     }

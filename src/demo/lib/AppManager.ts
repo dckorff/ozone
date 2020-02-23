@@ -53,27 +53,33 @@ class TodoManager {
         this._stateManager = stateManager;
     }
 
-    public getTodos(): Array<Todo> {
+    public getTodos = (): Array<Todo> => {
+        console.log('getTodos', this._stateManager.applyProjection(TodoProjections.getTodos, []));
         return this._stateManager.applyProjection(TodoProjections.getTodos, []);
     }
 
-    public setTodoDone(todoId: number, done: boolean) {
+    public setTodoDone = (todoId: number, done: boolean) => {
         this._stateManager.applyMutation( TodoMutations.setTodoDone, [todoId, done] );
     }
 
-    public setTodoTitle(todoId: number, title: string) {
+    public setTodoTitle = (todoId: number, title: string) => {
         this._stateManager.applyMutation( TodoMutations.setTodoTitle, [todoId, title] );
     }
 
     // We use manager classes to combine business logic or complex projection/mutations combinations
     // This logic could also be in the mutation itself, like TodoMutations.addTodoByValues()
-    public addTodo(title: string, done: boolean) {
+    public addTodo = (title: string, done: boolean) => {
         // this could be done within the Mutation function, but should it be?
+        let id = this._stateManager.applyProjection(StateProjections.getNextTodoId, []);
         const newTodo: Todo = {
             id: this._stateManager.applyProjection(StateProjections.getNextTodoId, []),
             title,
             done
         };
         this._stateManager.applyMutation(TodoMutations.addTodo, [newTodo]);
+    }
+
+    public removeTodo = (todoId: number) => {
+        this._stateManager.applyMutation(TodoMutations.removeTodo, [todoId])
     }
 }

@@ -15,12 +15,14 @@ export class StateProjections {
     }
 
     public static getNextTodoId(state: State): number {
-        return state.todos.reduce( 
-            (accumulatorTodo: Todo, currentTodo: Todo) => {
-                return currentTodo.id > accumulatorTodo.id
+        return state.todos.length > 0
+            ? state.todos.reduce(
+                (accumulatorTodo: Todo, currentTodo: Todo) => {
+                    return currentTodo.id > accumulatorTodo.id
                     ?  currentTodo
-                    : accumulatorTodo;
-            }
-        ).id + 1;
+                        : accumulatorTodo;
+                    }, state.todos[0]
+                ).id + 1
+            : 1;
     }
 }
