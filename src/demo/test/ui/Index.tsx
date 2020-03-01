@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { ContextWrapper, ContextConnector } from '../../Ozone/ContextWrapper';
+import { ContextWrapper, ContextConnector } from '../../../Ozone/ContextWrapper';
 // import { App } from './App';
-import App from './App';
+// import App from './App';
+import { AppContainer } from './AppContainer';
 import { AppManager } from '../lib/AppManager';
 import { State } from '../lib/State';
 
@@ -20,23 +21,33 @@ import { State } from '../lib/State';
 class DemoApp extends React.Component<any, any> {
 
     private appManager: AppManager;
+    private appManager2: AppManager;
 
     constructor(props: any) {
         super(props);
         this.appManager = new AppManager();
+        this.appManager2 = new AppManager();
     }
 
     public render() {
         return (
-            // <ReactStorm store={this.app.getStore()}>
-            // <AppManagerContextWrapper
-            <ContextWrapper
-                contextObject={{appManager: this.appManager}}
-                onChange={this.appManager.onStateChanged}
-            >
-                <App />
-            </ContextWrapper>
-            // </AppManagerContextWrapper>
+            <div>
+                asfdasdfasdf
+                <ContextWrapper
+                    contextObject={{appManager: this.appManager}}
+                    onChange={this.appManager.onStateChanged}
+                >
+                    <AppContainer />
+                </ContextWrapper>
+
+                <ContextWrapper
+                    contextObject={{appManager: this.appManager2}}
+                    onChange={this.appManager2.onStateChanged}
+                >
+                    <AppContainer />
+                </ContextWrapper>
+
+            </div>
         );
     }
 

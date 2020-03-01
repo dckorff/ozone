@@ -8,12 +8,12 @@ import { BaseMutaionFunction, MutationFunction, Mutation, RemoveFirstFromTuple, 
 //     public args:
 // }
 
-export class StateManager<TState> {
+export class Store<TState> {
 
     private _state: TState;
     private _previousState: TState;
     // private _onStateChangedListeners: Array<(state: TState, previousState: TState) => void> = [];
-    private _onStateChangedListeners: Array<(state: StateManager<TState>, previousState: StateManager<TState>) => void> = [];
+    private _onStateChangedListeners: Array<(state: Store<TState>, previousState: Store<TState>) => void> = [];
     // private _mutationQueue: Array<BaseMutaionFunction<TState>>;
     // private _mutationQueue: Array<BaseMutaionFunction<TState>>;
     // private _mutationQueue: Array<MutationFunction<TState, BaseMutaionFunction<TState>>>;
@@ -44,13 +44,13 @@ export class StateManager<TState> {
     private _stateChanged(state: TState, previousState: TState) {
         // this._onStateChangedListeners.forEach( fn => fn(state, previousState));
         this._onStateChangedListeners.forEach( fn =>
-            fn(new StateManager<TState>(state), new StateManager<TState>(previousState))
+            fn(new Store<TState>(state), new Store<TState>(previousState))
         );
     }
 
     // TODO: Add a priority here?
     // public onStateChanged(fn: (state: TState, previousState: TState) => void) : UnsubscribeAction {
-    public onStateChanged = (fn: (state: StateManager<TState>, previousState: StateManager<TState>) => void) : UnsubscribeAction => {
+    public onStateChanged = (fn: (state: Store<TState>, previousState: Store<TState>) => void) : UnsubscribeAction => {
         this._onStateChangedListeners.push(fn);
         return () => this._onStateChangedListeners.filter(thisFunction => thisFunction != fn);
     }

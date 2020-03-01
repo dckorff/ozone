@@ -1,22 +1,25 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/demo/ui/Index.tsx',
-  mode: 'development',
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-    ],
-  },
-  resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ],
-  },
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-  },
+    entry: {
+        layered: './src/demo/layered/ui/Index.tsx',
+        test: './src/demo/test/ui/Index.tsx'
+    },
+    mode: 'development',
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
+        ],
+    },
+    resolve: {
+        extensions: [ '.tsx', '.ts', '.js' ],
+    },
+    output: {
+        filename: '[name].bundle.js',
+        path: path.resolve(__dirname, 'dist'),
+    },
 };

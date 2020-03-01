@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { AppManager } from '../lib/AppManager';
-import { ContextConnector } from '../../Ozone/ContextWrapper';
+import { ContextConnector } from '../../../Ozone/ContextWrapper';
 import { Todo } from '../lib/State';
 
 interface IProps {

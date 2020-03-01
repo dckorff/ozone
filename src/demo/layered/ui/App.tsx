@@ -2,7 +2,7 @@ import React from 'react';
 
 // import { AppManager } from '../lib/AppManager';
 import { AppContext } from '../lib/Types';
-import { ContextConnector } from '../../Ozone/ContextWrapper';
+import { ContextConnector } from '../../../Ozone/ContextWrapper';
 import TodoList from './TodoList';
 import { Todo } from '../lib/State';
 
