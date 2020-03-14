@@ -75,6 +75,7 @@ export class Store<TState> {
         this._processMutationQueue();
     }
 
+
     private _applyMutation<TFn extends BaseMutaionFunction<TState>>(mutation: Mutation<TState, TFn>) {
         this._previousState = this._getState();
         this._setState(mutation.fn(this._getState(), ...mutation.args));
@@ -105,5 +106,8 @@ export class Store<TState> {
     ): ReturnType<TFn> {
         return fn(this._getState(), ...args);
     }
+
+    public set = this.applyMutation;
+    public get = this.applyProjection;
 
 }
