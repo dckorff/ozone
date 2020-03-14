@@ -8,7 +8,7 @@
     "build": "webpack",
     "watch": "webpack -w"
   },
-  "author": "",
+  "author": "dan",
   "license": "ISC",
   "dependencies": {
     "@types/react": "^16.9.19",

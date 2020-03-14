@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import { StateChangedAction, UnsubscribeAction } from './Types';
 
@@ -14,7 +14,7 @@ interface IState<TContext> {
     // contextObject: TContext;
 }
 
-
+console.log('React', React);
 const OzoneContext = React.createContext<ContextType>({value: {}});;
 
 export class ContextWrapper<TState, TContext> extends React.Component<IProps<TState, TContext>, IState<TContext>> {
@@ -33,7 +33,6 @@ export class ContextWrapper<TState, TContext> extends React.Component<IProps<TSt
         // This needs a typed object
         this.unsubscribe = this.props.onChange(
             (state, previousState) => {
-                console.log('wrapper-onChange', state, previousState);
                 // Creating an new object here is what triggers the React context to rerender connected components
                 // this.contextValue = {value: this.props.contextObject};
                 this.setState({value: this.state.value})
@@ -46,7 +45,6 @@ export class ContextWrapper<TState, TContext> extends React.Component<IProps<TSt
     }
 
     public render = () => {
-        console.log('ContextWrapper-render');
         return (
             <OzoneContext.Provider
                 value={{value: this.props.contextObject}}
@@ -68,34 +66,20 @@ export function ContextConnector<TContext> (
     mapper: (contextObject: TContext) => Partial<React.ComponentProps<typeof ReactComponentToWrap>>
 ): typeof React.Component {
 
-    console.log('ContextConnector', ReactComponentToWrap);
-
     const WrappedComponent = class extends React.Component<any, any> {
 
         // TODO: this isn't really working right
         // private getProps = (): Partial<React.ComponentProps<typeof ReactComponentToWrap>> => {
         private getProps = (): React.ComponentProps<typeof ReactComponentToWrap> => {
-        // private getProps = (): Partial<React.ComponentProps<typeof ReactComponentToWrap>> => {
-        // private getProps = (): Partial<React.ComponentProps<TReactComponent>> => {
-        // private getProps = (): Partial<GetComponentProps<typeof ReactComponentToWrap>> => {
-        // private getProps = () => {
-        // private getProps = (): (typeof ReactComponentToWrap)['props'] => {
-            // let a: React.ComponentProps<TReactComponent> = {
-
-            // }
-            console.log('wrapped context')
-            console.log(this.context.value);
             return mapper(this.context.value);
         }
 
         public render() {
-            console.log('WrappedComponent-render')
             return <ReactComponentToWrap {...this.getProps()} />;
         }
 
     }
 
-    // WrappedComponent.contextType = ContextWrapper.OzoneContext;
     WrappedComponent.contextType = OzoneContext;
 
     return WrappedComponent;

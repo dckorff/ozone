@@ -44,7 +44,10 @@ export class Store<TState> {
     private _stateChanged(state: TState, previousState: TState) {
         // this._onStateChangedListeners.forEach( fn => fn(state, previousState));
         this._onStateChangedListeners.forEach( fn =>
-            fn(new Store<TState>(state), new Store<TState>(previousState))
+
+            // A new store or this?
+            // fn(new Store<TState>(state), new Store<TState>(previousState))
+            fn(this, new Store<TState>(previousState))
         );
     }
 
