@@ -2,20 +2,65 @@
 
 ## Principles
 - A single immutable state object.
-- No direct access to the state. Change the state with mutation functions, read the state with projection functions.
+- No direct access to the state. Get and set the state with pure functions.
 - Single event broadcast every time a state change occurs.
 - Strong typing with TypeScript
-- Same idea as redux but with less (or at least different) boilerplate.
+- Similar idea as Redux but with more flexibility and less boilerplate.
 
+
+## Example
 ```
-const store = new OzoneStore({value: 'hello'});
+import { Store } from 'ozone';
 
+const store = new Store({value: 'hello'});
+
+// Any time the store changes...
 store.onChange( (store, previousStore) => {
-    console.log(store.applyProjection( (state) => state.value ));
+    // Provide a pure function for getting a value out of the store:
+    console.log(store.get( (state) => state.value ));
 });
 
-store.applyMutation( (state) => {value: 'hello world'} );
+// Provide a pure function for mutating the store:
+store.set( (state) => {value: 'hello world'} );
+
 ```
+
+
+## React Integration
+Ozone includes an additional but separate tool help itegrate with React.
+
+Add the store to your app's context:
+```
+import { Store, ContextWrapper } from 'ozone';
+
+const store = new Store({value: 'hello'});
+
+<ContextWrapper
+    contextObject={{store: store}}
+    onChange={store.onStateChanged}
+>
+    <App />
+</ContextWrapper>
+```
+Connect your component to the store:
+```
+class Label extends React.Component {
+    render() {
+        <span>{this.props.value}</span>
+    }
+}
+// Any time your store chanages this will run and if any values are different
+// your component will be rerendered
+export default ContextConnector(
+    Label,
+    ( contextObject ): IProps => {
+        return {
+            value: contextObject.store.get( (state) => state.value )
+        };
+    }
+);
+```
+
 
 ## TODO:
 - share mutations/projections between demo apps

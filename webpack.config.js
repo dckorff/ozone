@@ -2,8 +2,8 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        layered: './src/demo/layered/ui/Index.tsx',
-        test: './src/demo/test/ui/Index.tsx'
+        // layered: './src/demo/layered/ui/Index.tsx',
+        stateless: './src/demo/stateless/ui/Index.tsx'
     },
     mode: 'development',
     module: {

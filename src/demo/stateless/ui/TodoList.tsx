@@ -4,12 +4,13 @@ import { AppContext } from '../lib/Types';
 import { ContextConnector } from '../../../Ozone/ContextWrapper';
 import { Todo } from '../lib/State';
 import { TodoEdit } from './TodoEdit';
-import { TodoMutations } from '../../test/lib/TodoMutations';
-import { TodoProjections } from '../../layered/lib/TodoProjections';
+import { TodoOperations } from '../lib/TodoOperations';
 
 interface IProps {
     addTodo?: (title: string, done: boolean) => void;
+    setDone?: (todoIndex: number, done: boolean) => void;
     removeTodo?: (todoId: number) => void;
+    onChangedTitle?: (todoIndex: number, name: string) => void;
     todos?: Array<Todo>;
 }
 
@@ -25,24 +26,10 @@ export class TodoList extends React.Component<IProps, IState> {
 
     private onAddNewTodo = () => {
         this.props.addTodo(this.state.newTodoName, false);
-        console.log('ok1')
-        this.setState({newTodoName: ''}, () => console.log('ok3'));
-        console.log('ok2')
+        this.setState({newTodoName: ''});
     }
 
-    private onDoneChanged = (todoId: number, value: boolean) => {
-        // this.props.
-    };
-
-    private onNameChanged = (todoId: number, name: string) => {
-
-    };
-
-    private onRemoveTodo = (todoId: number) => {
-        this.props.removeTodo(todoId);
-    }
-
-    private onTextChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+    private onNewTodoTextChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({newTodoName: event.target.value});
     }
 
@@ -51,17 +38,17 @@ export class TodoList extends React.Component<IProps, IState> {
             <div>
                 <input
                     type='text'
-                    onChange={this.onTextChanged}
+                    onChange={this.onNewTodoTextChanged}
                     value={this.state.newTodoName}
                 ></input>
                 <button onClick={this.onAddNewTodo}>+</button>
                 {
-                    this.props.todos.map( todo =>
+                    this.props.todos.map( (todo, index) =>
                         <TodoEdit
-                            key={todo.id}
-                            onDoneChanged={ (done) => this.onDoneChanged(todo.id, done) }
-                            onNameChanged={ (name) => this.onNameChanged(todo.id, name) }
-                            onTodoDelete={ () => this.onRemoveTodo(todo.id) }
+                            key={index}
+                            onDoneChanged={ (done) => this.props.setDone(index, done) }
+                            onNameChanged={ (title) => this.props.onChangedTitle(index, title) }
+                            onTodoDelete={ () => this.props.removeTodo(index) }
                             todo={todo}
                         />
                     )
@@ -77,17 +64,24 @@ export default ContextConnector<AppContext>(
     TodoList,
     ( contextObject ): IProps => {
         return {
-            addTodo: (title: string) => contextObject.store.applyMutation(
-                TodoMutations.addTodo, [
+            addTodo: (title: string) => contextObject.store.set(
+                TodoOperations.addTodo, [
                     {
                         title: title,
-                        done: false,
-                        id: contextObject.store.applyProjection(TodoProjections.getNextTodoId, [])
+                        done: false
                     }
                 ]
             ),
-            removeTodo: (todoId: number) => contextObject.store.applyMutation( TodoMutations.removeTodo, [todoId] ),
-            todos: contextObject.store.applyProjection(TodoProjections.getTodos, [])
+            setDone: (todoIndex: number, done: boolean) => contextObject.store.set(
+                TodoOperations.setTodoDone,
+                [todoIndex, done]
+            ),
+            onChangedTitle: (todoIndex: number, title: string) => contextObject.store.set(
+                TodoOperations.setTodoTitle,
+                [todoIndex, title]
+            ),
+            removeTodo: (todoIndex: number) => contextObject.store.set( TodoOperations.removeTodo, [todoIndex] ),
+            todos: contextObject.store.get(TodoOperations.getTodos, [])
         };
     }
 );

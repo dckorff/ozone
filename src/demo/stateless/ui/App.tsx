@@ -3,8 +3,7 @@ import React from 'react';
 import { AppContext } from '../lib/Types';
 import { ContextConnector } from '../../../Ozone/ContextWrapper';
 import TodoList from './TodoList';
-import { StateProjections } from '../lib/StateProjections'
-import { StateMutations } from '../lib/StateMutations'
+import { TodoOperations } from '../lib/TodoOperations';
 
 interface IProps {
     name: string;
@@ -36,8 +35,8 @@ export class App extends React.Component<IProps, {}> {
 export default ContextConnector<AppContext>(App,
     ( contextObject ): IProps => {
         return {
-            name: contextObject.store.applyProjection(StateProjections.getName, []),
-            onNameChanged: (name: string) => contextObject.store.applyProjection(StateMutations.setName, [name]),
+            name: contextObject.store.get(TodoOperations.getName, []),
+            onNameChanged: (name: string) => contextObject.store.set(TodoOperations.setName, [name]),
         };
     }
 );
