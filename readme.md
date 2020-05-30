@@ -44,6 +44,8 @@ const store = new Store({value: 'hello'});
 ```
 Connect your component to the store:
 ```
+import { ContextConnector } from 'ozone';
+
 class Label extends React.Component {
     render() {
         <span>{this.props.value}</span>
