@@ -1,3 +1,3 @@
-import { AppManager } from './AppManager';
+import { TodoManager } from './TodoManager';
 
-export type AppContext = {appManager: AppManager};
+export type AppContext = {todoManager: TodoManager};

@@ -1,46 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { ContextWrapper, ContextConnector } from '../../../Ozone/ContextWrapper';
-// import { App } from './App';
-import App from './App';
-import { AppManager } from '../lib/AppManager';
-import { State } from '../lib/State';
+import AppContainer from './AppContainer';
+import { ContextWrapper } from '../../../Ozone/ContextWrapper';
+import { TodoManager } from '../lib/TodoManager';
 
-// const AppManagerContextWrapper: React.Component<ContextWrapper<AppManager>> = ContextWrapper;
-// const AppManagerContextWrapper: ContextWrapper<State, AppManager> = ContextWrapper;
-// const AppManagerContextWrapper: ContextWrapper<any, any> = ContextWrapper;
-// const AppManagerContextWrapper = ContextWrapper;
-
-
-
-// Create a type for the context connector?
-// export const AppContextConnector = ContextConnector<AppCon>();
 
 class DemoApp extends React.Component<any, any> {
 
-    private appManager: AppManager;
+    private todoManager: TodoManager;
 
     constructor(props: any) {
         super(props);
-        this.appManager = new AppManager();
+        this.todoManager = new TodoManager();
     }
 
     public render() {
         return (
-            // <ReactStorm store={this.app.getStore()}>
-            // <AppManagerContextWrapper
             <ContextWrapper
-                contextObject={{appManager: this.appManager}}
-                onChange={this.appManager.onStateChanged}
+                contextObject={{todoManager: this.todoManager}}
+                onChange={this.todoManager.onStateChanged}
             >
-                <App />
+                <AppContainer />
             </ContextWrapper>
-            // </AppManagerContextWrapper>
         );
     }
 
 }
-
 
 ReactDOM.render(<DemoApp/>, document.getElementById('app'));

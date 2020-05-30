@@ -11,10 +11,8 @@ type ContextType = {value: any};
 
 interface IState<TContext> {
     value: TContext;
-    // contextObject: TContext;
 }
 
-console.log('React', React);
 const OzoneContext = React.createContext<ContextType>({value: {}});;
 
 export class ContextWrapper<TState, TContext> extends React.Component<IProps<TState, TContext>, IState<TContext>> {

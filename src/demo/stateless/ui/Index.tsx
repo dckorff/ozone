@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { ContextWrapper } from '../../../Ozone/ContextWrapper';
-import App from './App';
-import { State } from '../lib/State';
+import AppContainer from './AppContainer';
+import { State } from '../../shared/lib/State';
 import { Store } from '../../../ozone/Store';
 
 class DemoApp extends React.Component<any, any> {
@@ -21,7 +21,7 @@ class DemoApp extends React.Component<any, any> {
                 contextObject={{store: this.store}}
                 onChange={this.store.onStateChanged}
             >
-                <App />
+                <AppContainer />
             </ContextWrapper>
         );
     }

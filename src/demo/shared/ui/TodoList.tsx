@@ -1,14 +1,11 @@
 import React from 'react';
 
-import { AppContext } from '../lib/Types';
-import { ContextConnector } from '../../../Ozone/ContextWrapper';
 import { Todo } from '../lib/State';
 import { TodoEdit } from './TodoEdit';
-import { TodoOperations } from '../lib/TodoOperations';
 
-interface IProps {
+export interface IProps {
     addTodo?: (title: string, done: boolean) => void;
-    setDone?: (todoIndex: number, done: boolean) => void;
+    setDone: (todoIndex: number, done: boolean) => void;
     removeTodo?: (todoId: number) => void;
     onChangedTitle?: (todoIndex: number, name: string) => void;
     todos?: Array<Todo>;
@@ -58,30 +55,3 @@ export class TodoList extends React.Component<IProps, IState> {
     }
 
 }
-
-
-export default ContextConnector<AppContext>(
-    TodoList,
-    ( contextObject ): IProps => {
-        return {
-            addTodo: (title: string) => contextObject.store.set(
-                TodoOperations.addTodo, [
-                    {
-                        title: title,
-                        done: false
-                    }
-                ]
-            ),
-            setDone: (todoIndex: number, done: boolean) => contextObject.store.set(
-                TodoOperations.setTodoDone,
-                [todoIndex, done]
-            ),
-            onChangedTitle: (todoIndex: number, title: string) => contextObject.store.set(
-                TodoOperations.setTodoTitle,
-                [todoIndex, title]
-            ),
-            removeTodo: (todoIndex: number) => contextObject.store.set( TodoOperations.removeTodo, [todoIndex] ),
-            todos: contextObject.store.get(TodoOperations.getTodos, [])
-        };
-    }
-);

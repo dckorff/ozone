@@ -1,13 +1,9 @@
 import React from 'react';
 
-import { AppContext } from '../lib/Types';
-import { ContextConnector } from '../../../Ozone/ContextWrapper';
-import TodoList from './TodoList';
-import { TodoOperations } from '../lib/TodoOperations';
-
-interface IProps {
+export interface IProps {
     name: string;
     onNameChanged: (name: string) => void;
+    todoList: typeof React.Component;
 }
 
 export class App extends React.Component<IProps, {}> {
@@ -25,18 +21,9 @@ export class App extends React.Component<IProps, {}> {
                     value={this.props.name}
                 ></input>
                 <hr />
-                <TodoList />
+                <this.props.todoList />
             </div>
         );
     }
 
 }
-
-export default ContextConnector<AppContext>(App,
-    ( contextObject ): IProps => {
-        return {
-            name: contextObject.store.get(TodoOperations.getName, []),
-            onNameChanged: (name: string) => contextObject.store.set(TodoOperations.setName, [name]),
-        };
-    }
-);
