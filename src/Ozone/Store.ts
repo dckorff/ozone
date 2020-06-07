@@ -55,7 +55,7 @@ export class Store<TState> {
     // public onStateChanged(fn: (state: TState, previousState: TState) => void) : UnsubscribeAction {
     public onStateChanged = (fn: (state: Store<TState>, previousState: Store<TState>) => void) : UnsubscribeAction => {
         this._onStateChangedListeners.push(fn);
-        return () => this._onStateChangedListeners.filter(thisFunction => thisFunction != fn);
+        return () => this._onStateChangedListeners = this._onStateChangedListeners.filter(thisFunction => thisFunction != fn);
     }
 
     // TODO: What if instead of the State being passed into the mutation function, you are forced to pass
