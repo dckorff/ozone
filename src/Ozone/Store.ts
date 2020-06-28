@@ -22,6 +22,8 @@ export class Store<TState> {
     private _mutationQueue: Array<Mutation<TState, BaseMutaionFunction<TState>>> = [];
     private _processingMutation = false;
 
+    // TODO: Add an options object too?
+    //   enforceImmutable: bool -> use object.freeze or deepfreeze on store object
     constructor(initialState: TState) {
         this._state = initialState;
     }
@@ -85,6 +87,7 @@ export class Store<TState> {
     // this garuntees that the mutations and the listeners that are triggered by it all
     // finish before the next mutation occurs
     private _processMutationQueue() {
+
         if (this._processingMutation || this._mutationQueue.length === 0) {
             return;
         }
@@ -94,7 +97,9 @@ export class Store<TState> {
         this._applyMutation(this._mutationQueue.shift());
 
         this._processingMutation = false;
+
         this._processMutationQueue();
+
     }
 
     // Should projections have paramegers other than the state?
