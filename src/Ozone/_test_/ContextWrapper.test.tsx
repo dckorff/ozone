@@ -44,7 +44,7 @@ class ChildComponentProps {
 }
 
 class ChildComponent extends React.Component<ChildComponentProps, {}> {
-    public shouldComponentUpdate(nextProps, nextState){
+    public shouldComponentUpdate(nextProps: any, nextState: any){
         return true;
     }
     public render(){
@@ -143,7 +143,7 @@ describe('ContextWrapper Tests', function() {
     });
 
     it('Props passed in from the parent component are merged into the connected component', function(){
-        chai.expect(true).to.be(false);
+        chai.expect(true).to.equal(false);
     });
 
 
