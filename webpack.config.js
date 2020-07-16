@@ -5,7 +5,6 @@ module.exports = {
         layered: './src/demo/layered/ui/Index.tsx',
         stateless: './src/demo/stateless/ui/Index.tsx'
     },
-    mode: 'development',
     module: {
         rules: [
             {

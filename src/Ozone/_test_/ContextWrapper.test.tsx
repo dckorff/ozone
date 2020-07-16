@@ -4,11 +4,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import * as sinon from 'sinon';
-const jsdom = require("mocha-jsdom");
-globalThis.document = jsdom({
-    url: "http://localhost:3000/"
-});
-
+import jsdomGlobal from 'jsdom-global';
+jsdomGlobal();
 
 import { ContextWrapper, ContextConnector } from '../ContextWrapper';
 import { Store } from '../Store';
