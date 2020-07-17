@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Immutable state manager",
   "main": "dist/index.js",
+  "types": "dist/dist/index.d.ts",
   "scripts": {
     "test": "ts-mocha -p ./tsconfig.json src/**/_test_/*.test.ts*",
     "build": "webpack",

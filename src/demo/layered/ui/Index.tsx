@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import AppContainer from './AppContainer';
-import { ContextWrapper } from '../../../Ozone/ContextWrapper';
+import { ContextWrapper } from '../../../ozone/ContextWrapper';
 import { TodoManager } from '../lib/TodoManager';
 
 

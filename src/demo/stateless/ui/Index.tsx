@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { ContextWrapper } from '../../../Ozone/ContextWrapper';
+import { ContextWrapper } from '../../../ozone/ContextWrapper';
 import AppContainer from './AppContainer';
 import { State } from '../../shared/lib/State';
 import { Store } from '../../../ozone/Store';

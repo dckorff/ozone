@@ -1,5 +1,5 @@
 import { AppContext } from '../../shared/lib/Types';
-import { ContextConnector } from '../../../Ozone/ContextWrapper';
+import { ContextConnector } from '../../../ozone/ContextWrapper';
 import { App, IProps } from '../../shared/ui/App';
 import { TodoOperations } from '../../shared/lib/TodoOperations';
 import TodoListContainer from './TodoListContainer';

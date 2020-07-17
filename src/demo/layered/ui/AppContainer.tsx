@@ -1,6 +1,6 @@
 import { App, IProps } from '../../shared/ui/App';
 import { AppContext } from '../lib/Types';
-import { ContextConnector } from '../../../Ozone/ContextWrapper';
+import { ContextConnector } from '../../../ozone/ContextWrapper';
 import TodoContainer from './TodoListContainer';
 
 export default ContextConnector<AppContext>(
